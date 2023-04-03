@@ -1,34 +1,42 @@
-TreeView Dynamic Component: 
 
-This is a dynamic TreeView component that loads data dynamically that is after clicking on the tree node.
+**TreeView Dynamic Component**: 
 
-``` 
+This dynamic TreeView component represents a dynamic tree structure where values(leaves) of the tree are loaded (when present) every time the tree node is clicked. 
+
+**Example** - Imagine having a list of 100 dog breeds with each dog breed consisting of several sub-breeds & each sub-breed having further classifications and so on. 
+Now imagine a user looking for dog breed ‘bulldog’ and further sub-breed as ‘boston bulldog’. In such a case instead of fetching all the data belonging to all the dog breeds via an API call, this dynamic TreeView component only fetches the data for the ‘clicked or selected’ dog breed e.g. bulldog . Same applies when a user wants browse further classifications of the selected sub-breed e.g. ‘boston bulldog’
+
+This dynamic TreeView component makes navigating big tree structures such as above computationally efficient and fast. 
+
+
+```
+TreeView Component that takes input props to render the requested tree view
+ 
 <TreeView
     {tree}
     getSubTree={(val) => getSubTree(val)}
     bind:treeNodeClicked
-    />
-  ```
+ />
+```
+
+**Implementation Details and Workflow steps** -
 
 
-Implementation:-
+**TreeApp.svelte (the component which populates tree data structure)** :
 
-Workflow:-  
-1.TreeApp.svelte (the component which populates tree data structure):
-
-•	At first, creating a “tree” object will conclusively represent our tree structure being rendered.
+At first, creating a “tree” object will conclusively represent our tree structure being rendered.
 
 ```
  let tree = {
         NAME: "Dogs",
         children: [],
-    };
+  };
     
 ```
 
-•	Then, To fill it Dynamically every time on click event on a tree node, a function named “getSubTree” is being defined that fetches data from provided API –“shown_in_code_snippet_below.”  
+1. To load the tree dynamically every time on click event on a tree node, a function named “getSubTree” is being called. It fetches data from provided API.
 
-•	Now, Within function “getSubTree” function named “convertToTreeDataFormat” is called, which converts the fetched data to the required data format for children of a tree that is an array of objects.
+2. Within function “getSubTree” function named “convertToTreeDataFormat” converts the fetched data to the required data format for children of a tree
 
 ```
   async function getSubTree(breed) {
@@ -63,10 +71,9 @@ Workflow:-
     }
 
 ```
-•	Then followed with the conversion of data function “insertToTreeData” is called which inserts the fetched data
-Of particular node to its parent’s node using Recursion.
+4. After the conversion the function  “insertToTreeData” inserts fetched data to its parent node using Recursion.
 
-•	Note -> Here, in the above example, the if-condition, which executes only once using “onMount” in svelte, is provided such that there always remains a parent tree structure. In contrast, DOM loads and further fetched data are updated to this structure because if it is not provided, brought data will replace with the parent structure, thus disrupting treeview.
+5. Note -> In the above example, the if-condition, which executes only once using “onMount” in svelte, is provided such that there always remains a parent tree structure. This is done to avoid disruption of the tree view when DOM loads;  newly updated data will replace the parent structure thereby disrupting the tree view
 
 ```
 function covertToTreeDataFormat(array, status) {
@@ -101,9 +108,9 @@ function insertToTreeData(array, fetchedData, breed) {
         });
     }
 ```
-•	Now, within “insertToTreeData” fetched Node-Data is being inserted to its parent node/with respective parent-child relation.
-Function “removeDuplicates” is called to remove duplicity in case it exists.
-•	At the end “updateTree” function is defined and called to update the “tree” object that is being rendered with the populated “tree data” variable.
+6. Within “insertToTreeData” fetched node-data is being inserted to its parent node/with respective parent-child relation.
+7. Function “removeDuplicates” is called to remove duplicity in case it exists.
+8. At the end “updateTree” function is defined and called to update the “tree” object that is being rendered with the populated “tree data” variable.
 
 ```
 function updateTree(tree, treeData) {
@@ -111,10 +118,12 @@ function updateTree(tree, treeData) {
   tree["children"][i] = treeData[i];
    }
 }
-```
-2.TreeViewDynamicLoad.svelte (the component that displays tree structure using recursion):
 
-•	To display TreeView in svelte, “svelte: self” is used to recursively render the nested data structure that is tree structure appropriately.
+
+```
+**TreeViewDynamicLoad.svelte (the component that displays tree structure using recursion **:
+
+1. To display TreeView in svelte, “svelte: self” is used to recursively render the nested data structure that is tree structure appropriately.
 ```
 	{#if expanded}
 					{#each children as child}
@@ -127,7 +136,7 @@ function updateTree(tree, treeData) {
 					{/each}
 				{/if}
 ```
-•	onClick methods are defined to populate tree structure dynamically  .
+2. onClick methods are defined to populate tree structure dynamically  .
 
 ```
 <span
