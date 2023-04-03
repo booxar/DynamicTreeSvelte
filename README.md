@@ -1,9 +1,9 @@
 
-TreeView Dynamic Component: 
+**TreeView Dynamic Component**: 
 
 This dynamic TreeView component represents a dynamic tree structure where values(leaves) of the tree are loaded (when present) every time the tree node is clicked. 
 
-Example - Imagine having a list of 100 dog breeds with each dog breed consisting of several sub-breeds & each sub-breed having further classifications and so on. 
+**Example** - Imagine having a list of 100 dog breeds with each dog breed consisting of several sub-breeds & each sub-breed having further classifications and so on. 
 Now imagine a user looking for dog breed ‘bulldog’ and further sub-breed as ‘boston bulldog’. In such a case instead of fetching all the data belonging to all the dog breeds via an API call, this dynamic TreeView component only fetches the data for the ‘clicked or selected’ dog breed e.g. bulldog . Same applies when a user wants browse further classifications of the selected sub-breed e.g. ‘boston bulldog’
 
 This dynamic TreeView component makes navigating big tree structures such as above computationally efficient and fast. 
@@ -19,10 +19,10 @@ TreeView Component that takes input props to render the requested tree view
  />
 ```
 
-Implementation Details and Workflow steps -
+**Implementation Details and Workflow steps** -
 
 
-* TreeApp.svelte (the component which populates tree data structure):
+**TreeApp.svelte (the component which populates tree data structure)** :
 
 At first, creating a “tree” object will conclusively represent our tree structure being rendered.
 
@@ -121,7 +121,7 @@ function updateTree(tree, treeData) {
 
 
 ```
-* TreeViewDynamicLoad.svelte (the component that displays tree structure using recursion):
+**TreeViewDynamicLoad.svelte (the component that displays tree structure using recursion **:
 
 1. To display TreeView in svelte, “svelte: self” is used to recursively render the nested data structure that is tree structure appropriately.
 ```
@@ -136,7 +136,7 @@ function updateTree(tree, treeData) {
 					{/each}
 				{/if}
 ```
-1. onClick methods are defined to populate tree structure dynamically  .
+2. onClick methods are defined to populate tree structure dynamically  .
 
 ```
 <span
