@@ -32,13 +32,14 @@
 	<ul>
 		<li>
 			{#if children}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<span
 					on:click={() => {
 						toggleExpansion(false);
 						treeNodeClicked = tree;
 					}}
 				>
-					<span class="arrow" class:arrowDown>&#x25b6</span>
+				<span class="arrow" class:arrowDown>&#x25b6</span>
 					{#if treeNodeClicked && treeNodeClicked.leaf === "true" && treeNodeClicked.NAME === label}
 						{label}
 						{#if expanded}
@@ -54,6 +55,7 @@
 						{label}
 					{/if}
 				</span>
+
 				{#if expanded}
 					{#each children as child}
 						<svelte:self
@@ -66,6 +68,7 @@
 					{/each}
 				{/if}
 			{:else}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<span
 					on:click={() => {
 						toggleExpansion(true);

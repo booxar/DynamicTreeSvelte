@@ -2,6 +2,7 @@
     import TreeView from "./TreeViewDynamicLoad.svelte";
 
     import { onMount } from "svelte";
+
     let treeData = [];
     let noDuplicatesArray = [];
     let tree = {
@@ -49,7 +50,9 @@
                     fetchData.status
                 );
                 console.log(fetchedData, "fetchedData");
-                if (breed == "") treeData = fetchedData;
+                if (breed == "") {
+                    treeData = fetchedData;
+                }
                 else {
                     insertToTreeData(treeData, fetchedData, breed)
                      console.log(tree, "TREE");
@@ -79,9 +82,14 @@
 
     function insertToTreeData(array, fetchedData, breed) {
         if (array.length == 0) return;
+        console.log("array", array);
+        console.log("fetchedData", fetchedData);
+        console.log("breed", breed);
+
 
         array.forEach((val) => {
             if (val["children"] && val["children"].length > 0) {
+                console.log("val", val);
                 insertToTreeData(val.children, fetchedData, breed);
             }
             if (val.NAME === breed) {
@@ -113,4 +121,4 @@
     {tree}
     getSubTree={(val) => getSubTree(val)}
     bind:treeNodeClicked
-    />
+/>
